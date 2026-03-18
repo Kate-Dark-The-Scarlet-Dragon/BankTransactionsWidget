@@ -1,6 +1,7 @@
-from datetime import datetime
-from src import masks
 import re
+from datetime import datetime
+
+from src import masks
 
 
 def is_cyrillic(text: str) -> bool:
