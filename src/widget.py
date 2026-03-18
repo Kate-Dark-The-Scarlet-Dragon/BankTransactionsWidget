@@ -1,3 +1,4 @@
+from datetime import datetime
 from src import masks
 import re
 
@@ -22,3 +23,11 @@ def mask_account_card(account_card: str) -> str:
         masked_number = masks.get_mask_card_number(number)
 
     return f"{' '.join(parts[:-1])} {masked_number}"
+
+
+def get_date(iso_date_time: str) -> str:
+    """Получение даты в формате 'ДД.ММ.ГГГГ' из строки формата даты и времени ISO 8601"""
+
+    date_time = datetime.fromisoformat(iso_date_time)
+
+    return date_time.strftime("%d.%m.%Y")
