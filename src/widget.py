@@ -5,16 +5,22 @@ from src import masks
 
 
 def is_cyrillic(text: str) -> bool:
-    """Проверка, что текст состоит из кириллических букв"""
-
+    """
+    Проверка, что текст состоит из кириллических букв
+    :param text: Текст
+    :return: Признак - текст состоит только из кириллических букв
+    """
     return bool(re.search("[а-яА-ЯёЁ]", text))
 
 
 def mask_account_card(account_card: str) -> str:
-    """Функция, которая форматирует номер в наименовании карты/счёта и выводит маску"""
-
+    """
+    Функция, которая форматирует номер в наименовании карты/счёта и выводит маску
+    :param account_card: Наименование карты/счёта
+    :return: Маска наименования карты/счёта
+    """
     parts = account_card.split()
-    number = int(parts[-1])
+    number = parts[-1]
 
     masked_number = ""
 
@@ -27,8 +33,11 @@ def mask_account_card(account_card: str) -> str:
 
 
 def get_date(iso_date_time: str) -> str:
-    """Получение даты в формате 'ДД.ММ.ГГГГ' из строки формата даты и времени ISO 8601"""
-
+    """
+    Получение даты из строки формата ISO 8601
+    :param iso_date_time: Строка даты и времени в формате ISO 8601
+    :return: Строка с датой в формате 'ДД.ММ.ГГГГ'
+    """
     date_time = datetime.fromisoformat(iso_date_time)
 
     return date_time.strftime("%d.%m.%Y")
