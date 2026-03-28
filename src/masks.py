@@ -7,7 +7,7 @@ def get_mask_card_number(card_number: str) -> str:
     if len(card_number) == 0:
         raise ValueError("Отсутствует номер карты")
 
-    if len(card_number) != 16 or card_number.isdecimal():
+    if len(card_number) != 16 or not card_number.isdecimal():
         raise ValueError("Номер карты должен состоять из 16 цифр")
 
     card_parts = [card_number[i : i + 4] for i in range(0, len(card_number), 4)]
@@ -26,7 +26,7 @@ def get_mask_account(account_number: str) -> str:
     if len(account_number) == 0:
         raise ValueError("Отсутствует номер лицевого счёта")
 
-    if len(account_number) != 20 or account_number.isdecimal():
+    if len(account_number) != 20 or not account_number.isdecimal():
         raise ValueError("Номер лицевого счёта состоять из 20 цифр")
 
     account_last_numbers = account_number[-4:]
