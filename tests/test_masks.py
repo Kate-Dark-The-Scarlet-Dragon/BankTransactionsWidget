@@ -3,11 +3,6 @@ import pytest
 from src import masks
 
 
-@pytest.fixture
-def incorrect_numbers():
-    return ["1242", "123456789012345678" "sometext", "sometext1234", "*-&?"]
-
-
 @pytest.mark.parametrize(
     "number, expected",
     [
