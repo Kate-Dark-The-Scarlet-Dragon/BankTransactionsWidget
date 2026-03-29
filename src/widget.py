@@ -4,13 +4,16 @@ from datetime import datetime
 from src import masks
 
 
-def is_cyrillic(text: str) -> bool:
+def is_only_cyrillic(text: str) -> bool:
     """
-    Проверка, что текст состоит из кириллических букв
+    Проверка, что текст состоит только из кириллических букв
     :param text: Текст
     :return: Признак - текст состоит только из кириллических букв
     """
-    return bool(re.search("[а-яА-ЯёЁ]", text))
+    if len(text) == 0:
+        raise ValueError("Невозможно выполнить проверку для пустой строки")
+
+    return bool(re.search(r"^[а-яА-ЯёЁ\s]+$", text))
 
 
 def mask_account_card(account_card: str) -> str:
@@ -19,12 +22,15 @@ def mask_account_card(account_card: str) -> str:
     :param account_card: Наименование карты/счёта
     :return: Маска наименования карты/счёта
     """
+    if len(account_card) == 0:
+        raise ValueError("Невозможно выполнить операцию для пустого номера карты/счёта")
+
     parts = account_card.split()
     number = parts[-1]
 
     masked_number = ""
 
-    if is_cyrillic(parts[0]):
+    if is_only_cyrillic(parts[0]):
         masked_number = masks.get_mask_account(number)
     else:
         masked_number = masks.get_mask_card_number(number)
@@ -38,6 +44,9 @@ def get_date(iso_date_time: str) -> str:
     :param iso_date_time: Строка даты и времени в формате ISO 8601
     :return: Строка с датой в формате 'ДД.ММ.ГГГГ'
     """
+    if len(iso_date_time) == 0:
+        raise ValueError("Невозможно преобразовать дату из пустой строки")
+
     date_time = datetime.fromisoformat(iso_date_time)
 
     return date_time.strftime("%d.%m.%Y")
