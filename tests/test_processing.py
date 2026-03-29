@@ -16,7 +16,7 @@ def test_filter_by_state(operations, state, expected):
 
 
 def test_filter_by_state_with_empty_list():
-    assert processing.filter_by_state([], "EXECUTED") == []
+    assert processing.filter_by_state([]) == []
 
 
 @pytest.mark.parametrize(
@@ -28,4 +28,4 @@ def test_sort_by_date(operations, is_descending, expected):
 
 
 def test_sort_by_date_with_empty_list():
-    assert processing.filter_by_state([]) == []
+    assert processing.sort_by_date([]) == []
