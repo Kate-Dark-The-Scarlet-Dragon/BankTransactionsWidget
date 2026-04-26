@@ -13,9 +13,12 @@ def test_log_console_success(capsys):
 
     result = some_func()
     captured = capsys.readouterr()
+    captured_lines = captured.out.splitlines()
 
     assert result == "some funct result"
-    assert captured.out.strip() == "some_func ok"
+    assert captured_lines[0] == "some_func start"
+    assert captured_lines[1] == "some_func end"
+    assert captured_lines[2] == "some_func ok"
 
 
 def test_log_console_error(capsys):
@@ -27,7 +30,11 @@ def test_log_console_error(capsys):
         divide(5, 0)
 
     captured = capsys.readouterr()
-    assert "divide error: ZeroDivisionError. Inputs: (5, 0), {}" in captured.out
+    captured_lines = captured.out.splitlines()
+
+    assert captured_lines[0] == "divide start"
+    assert captured_lines[1] == "divide end"
+    assert captured_lines[2] == "divide error: ZeroDivisionError. Inputs: (5, 0), {}"
 
 
 def test_log_console_with_kwargs(capsys):
@@ -37,9 +44,12 @@ def test_log_console_with_kwargs(capsys):
 
     result = greet_user("Kate", greeting="Hi")
     captured = capsys.readouterr()
+    captured_lines = captured.out.splitlines()
 
     assert result == "Hi, Kate"
-    assert captured.out.strip() == "greet_user ok"
+    assert captured_lines[0] == "greet_user start"
+    assert captured_lines[1] == "greet_user end"
+    assert captured_lines[2] == "greet_user ok"
 
 
 def test_log_no_parentheses_console(capsys):
@@ -49,14 +59,17 @@ def test_log_no_parentheses_console(capsys):
 
     get_none()
     captured = capsys.readouterr()
+    captured_lines = captured.out.splitlines()
 
-    assert "get_none ok" in captured.out
+    assert captured_lines[0] == "get_none start"
+    assert captured_lines[1] == "get_none end"
+    assert captured_lines[2] == "get_none ok"
 
 
 def test_log_file_success(capsys):
-    log_file = Path(BASE_DIRECTORY) / "test.log"
+    log_file_path = Path(BASE_DIRECTORY) / "test.log"
 
-    @log(filepath=str(log_file))
+    @log(filepath=str(log_file_path))
     def some_func():
         return "some funct result"
 
@@ -70,15 +83,17 @@ def test_log_file_success(capsys):
     assert captured.out == ""
 
     # Проверяем содержимое файла
-    last_line = log_file.read_text().strip().split("\n")[-1]
+    lines = log_file_path.read_text().strip().split("\n")
 
-    assert last_line == "some_func ok"
+    assert lines[-3] == "some_func start"
+    assert lines[-2] == "some_func end"
+    assert lines[-1] == "some_func ok"
 
 
 def test_log_file_error(capsys):
-    log_file = Path(BASE_DIRECTORY) / "test.log"
+    log_file_path = Path(BASE_DIRECTORY) / "test.log"
 
-    @log(filepath=str(log_file))
+    @log(filepath=str(log_file_path))
     def divide(a, b):
         return a / b
 
@@ -90,9 +105,11 @@ def test_log_file_error(capsys):
     assert captured.out == ""
 
     # Проверяем содержимое файла
-    last_line = log_file.read_text().strip().split("\n")[-1]
+    lines = log_file_path.read_text().strip().split("\n")
 
-    assert last_line == "divide error: ZeroDivisionError. Inputs: (5, 0), {}"
+    assert lines[-3] == "divide start"
+    assert lines[-2] == "divide end"
+    assert lines[-1] == "divide error: ZeroDivisionError. Inputs: (5, 0), {}"
 
 
 def test_log_file_multiple_calls():
@@ -116,8 +133,14 @@ def test_log_file_multiple_calls():
 
     lines = log_file_path.read_text().strip().split("\n")
 
-    assert lines[-3] == "some_func ok"
-    assert lines[-2] == "divide error: ZeroDivisionError. Inputs: (5, 0), {}"
+    assert lines[-9] == "some_func start"
+    assert lines[-8] == "some_func end"
+    assert lines[-7] == "some_func ok"
+    assert lines[-6] == "divide start"
+    assert lines[-5] == "divide end"
+    assert lines[-4] == "divide error: ZeroDivisionError. Inputs: (5, 0), {}"
+    assert lines[-3] == "some_func start"
+    assert lines[-2] == "some_func end"
     assert lines[-1] == "some_func ok"
 
 

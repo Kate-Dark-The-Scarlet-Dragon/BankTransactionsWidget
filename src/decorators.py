@@ -28,8 +28,11 @@ def log(filepath: str = "") -> Callable[..., Any]:
         @wraps(function)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             try:
+                write_log_text(f"{function.__name__} start", filepath)
+
                 result = function(*args, **kwargs)
 
+                write_log_text(f"{function.__name__} end", filepath)
                 write_log_text(f"{function.__name__} ok", filepath)
 
                 return result
@@ -39,6 +42,7 @@ def log(filepath: str = "") -> Callable[..., Any]:
                 inputs = f"{repr(args) if args else '()'}, {repr(kwargs) if kwargs else '{}'}"
                 message = f"{function.__name__} error: {error_type}. Inputs: {inputs}"
 
+                write_log_text(f"{function.__name__} end", filepath)
                 write_log_text(message, filepath)
 
                 raise  # Пробрасываем исключение дальше
