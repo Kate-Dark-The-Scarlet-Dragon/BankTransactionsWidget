@@ -42,7 +42,7 @@ def card_number_generator(start: int, stop: int) -> Iterator[str]:
         raise ValueError("Стартовое значение не может быть больше конечного значения")
 
     if stop > 9999999999999999:
-        raise ValueError("Конечное число не должно превышать '9999999999999999' (16 цифр '9')")
+        raise ValueError("Конечное число не должно превышать \'9999 9999 9999 9999\' (16 цифр \'9\')")
 
     for number in range(start, stop + 1):
         number_as_string = str(number).zfill(16)
