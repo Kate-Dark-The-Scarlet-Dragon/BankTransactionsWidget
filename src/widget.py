@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 
-from src import masks
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def is_only_cyrillic(text: str) -> bool:
@@ -28,12 +28,10 @@ def mask_account_card(account_card: str) -> str:
     parts = account_card.split()
     number = parts[-1]
 
-    masked_number = ""
-
     if is_only_cyrillic(parts[0]):
-        masked_number = masks.get_mask_account(number)
+        masked_number = get_mask_account(number)
     else:
-        masked_number = masks.get_mask_card_number(number)
+        masked_number = get_mask_card_number(number)
 
     return f"{' '.join(parts[:-1])} {masked_number}"
 
