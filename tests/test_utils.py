@@ -3,8 +3,8 @@ import pytest
 from src.utils import load_transactions_from_file, get_transaction_amount_in_rub
 from unittest.mock import mock_open, Mock, patch
 
-# region Тесты для функции - load_transactions_from_file
 
+# region Тесты для функции - load_transactions_from_file
 
 # Успешное чтение JSON из файла
 def test_correct_data(transaction_list):
@@ -60,12 +60,9 @@ def test_io_error():
     with patch("builtins.open", side_effect=OSError("Disk error")):
         result = load_transactions_from_file("io_error.json")
         assert result == []
-
-
 # endregion
 
 # region Тесты для функции - get_transaction_amount_in_rub
-
 
 # Транзакция - валюта в рублях
 def test_rub_transaction(rub_transaction):
@@ -113,6 +110,4 @@ def test_conversion_error(usd_transaction):
 def test_incorrect_currency_error(incorrect_currency_transaction):
     with pytest.raises(ValueError, match="Не удалось распознать код валюты: TTT"):
         get_transaction_amount_in_rub(incorrect_currency_transaction)
-
-
 # endregion

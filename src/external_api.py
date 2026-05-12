@@ -1,5 +1,10 @@
 import os
 import requests
+from dotenv import load_dotenv
+
+
+# Загрузка переменных окружения
+load_dotenv()
 
 
 def convert_currency(amount: float, from_currency: str, to_currency: str = "RUB") -> float:

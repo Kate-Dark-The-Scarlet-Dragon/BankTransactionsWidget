@@ -14,7 +14,7 @@ def load_transactions_from_file(file_path: str) -> list[dict[str, Any]]:
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             data = json.load(file)
-    except OSError, PermissionError, FileNotFoundError, json.JSONDecodeError:
+    except (OSError, PermissionError, FileNotFoundError, json.JSONDecodeError):
         # Файл не может быть прочитан, не найден или повреждён
         return []
 
