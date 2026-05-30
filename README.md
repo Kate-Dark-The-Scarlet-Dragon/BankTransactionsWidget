@@ -26,10 +26,11 @@
   - [filter_by_currency](docs/api/generators.md#filter_by_currency) - Получение транзакций для указанной валюты;
   - [transaction_descriptions](docs/api/generators.md#transaction_descriptions) - Получение описаний транзакций;
   - [card_number_generator](docs/api/generators.md#card_number_generator) - Получить номера карт в указанном диапазоне;
+- Модуль `logger_setup.py`:
+  - [setup_logger](docs/api/logger_setup.md#setup_logger) - Создание и настройка логгера для указанного модуля;
 - Модуль `masks`:
   - [get_mask_card_number](docs/api/masks.md#get_mask_card_number) - Функция, которая форматирует номер карты и выводит маску;
   - [get_mask_account](docs/api/masks.md#get_mask_account) - Функция, которая форматирует номер лицевого счёта и выводит маску;
-
 - Модуль `widget` - содержит функции:
   - наложение маски на номера, используя функции из модуля `masks`;
   - получение даты из строки даты-времени формата ISO 8601;
@@ -74,13 +75,14 @@ poetry install
                      тестов      покрытия
 src\__init__.py           0          100%
 src\decorators.py        26          100%
-src\external_api.py      27          100%
+src\external_api.py      29          100%
 src\generators.py        19          100%
-src\masks.py             16          100%
+src\logger_setup.py      27           81%
+src\masks.py             30          100%
 src\processing.py        10          100%
-src\utils.py             22          100%
+src\utils.py             38          100%
 src\widget.py            21          100%
-TOTAL                   141          100%
+TOTAL                   200           98%
 ```
 
 > 📊 **HTML отчёт покрытия**: [`htmlcov/index.html`](htmlcov/src/index.html)
