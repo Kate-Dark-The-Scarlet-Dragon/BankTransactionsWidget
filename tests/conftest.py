@@ -1,4 +1,5 @@
 import pytest
+import pandas as pd
 
 
 # Фикстура списка некорректных номеров карт
@@ -253,4 +254,63 @@ def incorrect_currency_transaction():
         "from": "Visa Classic 6831982476737658",
         "to": "Visa Platinum 8990922113665229",
     }
+# endregion
+
+# region Фикстуры для проверки чтения транзакций из файлов
+
+@pytest.fixture
+def valid_dataframe():
+    """DataFrame с одной строкой."""
+    return pd.DataFrame(
+        [
+            {
+                "id": "1",
+                "state": "EXECUTED",
+                "date": "2024-01-15T10:00:00",
+                "amount": "100.50",
+                "currency_name": "Ruble",
+                "currency_code": "RUB",
+                "from": "Счет 12345",
+                "to": "Счет 67890",
+                "description": "Перевод"
+            }
+        ]
+    )
+
+
+@pytest.fixture
+def valid_record():
+    """Полностью заполненная неотформатированная запись (из файлов CSV/XLSX)."""
+    return {
+        "id": "42",
+        "state": "EXECUTED",
+        "date": "2024-02-02T12:00:00",
+        "amount": "500.00",
+        "currency_name": "Dollar",
+        "currency_code": "USD",
+        "from": "Иван Иванов",
+        "to": "Петр Петров",
+        "description": "Оплата услуг"
+    }
+
+
+@pytest.fixture
+def valid_transaction():
+    """Полностью заполненная запись транзакции."""
+    return {
+        "id": 42,
+        "state": "EXECUTED",
+        "date": "2024-02-02T12:00:00",
+        "operationAmount": {
+            "amount": "500.00",
+            "currency": {
+                "name": "USD",
+                "code": "USD"
+            }
+        },
+        "from": "Иван Иванов",
+        "to": "Петр Петров",
+        "description": "Оплата услуг"
+    }
+
 # endregion
