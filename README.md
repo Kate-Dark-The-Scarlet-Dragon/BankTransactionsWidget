@@ -80,15 +80,13 @@ src\__init__.py           0          100%
 src\decorators.py        26          100%
 src\external_api.py      29          100%
 src\generators.py        19          100%
+src\loader_csv_excel.py  49          100%
 src\logger_setup.py      27           81%
 src\masks.py             30          100%
-loader_csv_excel.py      49          100%
-src\masks.py             16          100%
 src\processing.py        10          100%
 src\utils.py             38          100%
 src\widget.py            21          100%
-TOTAL                   200           98%
-TOTAL                   192          100%
+TOTAL                   249           98%
 ```
 
 > 📊 **HTML отчёт покрытия**: [`htmlcov/index.html`](htmlcov/src/index.html)
