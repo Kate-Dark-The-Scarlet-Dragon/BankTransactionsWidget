@@ -32,6 +32,8 @@
   - [convert_data_to_transactions](docs/api/loader_csv_excel.md#convert_data_to_transactions) - Преобразование данных в список транзакций (словарей);
   - [validate_dataframe](docs/api/loader_csv_excel.md#validate_dataframe) - Проверка DataFrame на содержание данных и необходимых колонок;
   - [convert_record_to_transaction](docs/api/loader_csv_excel.md#convert_record_to_transaction) - Преобразует исходную запись из данных в требуемый формат транзакции;
+- Модуль `logger_setup.py`:
+  - [setup_logger](docs/api/logger_setup.md#setup_logger) - Создание и настройка логгера для указанного модуля;
 - Модуль `masks`:
   - [get_mask_card_number](docs/api/masks.md#get_mask_card_number) - Функция, которая форматирует номер карты и выводит маску;
   - [get_mask_account](docs/api/masks.md#get_mask_account) - Функция, которая форматирует номер лицевого счёта и выводит маску;
@@ -78,11 +80,14 @@ src\__init__.py           0          100%
 src\decorators.py        26          100%
 src\external_api.py      29          100%
 src\generators.py        19          100%
+src\logger_setup.py      27           81%
+src\masks.py             30          100%
 loader_csv_excel.py      49          100%
 src\masks.py             16          100%
 src\processing.py        10          100%
-src\utils.py             22          100%
+src\utils.py             38          100%
 src\widget.py            21          100%
+TOTAL                   200           98%
 TOTAL                   192          100%
 ```
 
