@@ -6,7 +6,7 @@ from typing import Any
 def load_transactions_from_file(file_path: str) -> list[dict[str, Any]]:
     """
     Загрузка списка транзакций (операций) из JSON-файла.
-    :param file_path: Путь к JSON-файлу
+    :param file_path: Путь к JSON-файлу.
     :return:  Список транзакций (операций).
     Если файл не найден, пустой, повреждён, не может быть прочитан или содержит не список словарей,
     то возвращается пустой список.
