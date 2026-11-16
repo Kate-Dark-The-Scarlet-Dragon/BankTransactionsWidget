@@ -31,11 +31,32 @@ def load_transactions_from_file(file_path: str) -> list[dict[str, Any]]:
     if isinstance(data, list) and all(isinstance(item, dict) for item in data):
         logger.info(f"Завершена загрузка транзакций из файла: {file_path}")
 
-        return data
+        return remove_empty_operations(data)
 
     logger.warning(f'Отсутствуют данные в файле "{file_path}" либо их формат не соответствует формату транзакций')
 
     return []
+
+
+def remove_empty_operations(data: Any) -> Any:
+    """
+    Удалить пустые элементы из загруженного JSON-файла.
+    :param data: Данные JSON-файла.
+    :return: Данные JSON-файла без пустых элементов.
+    """
+    if isinstance(data, list):
+        return [remove_empty_operations(v) for v in data if not is_empty_value(v)]
+
+    return data
+
+
+def is_empty_value(val: Any) -> bool:
+    """
+    Проверка на пустой элемент в данных JSON.
+    :param val: Элемент в JSON.
+    :return: Элемент является пустым.
+    """
+    return val is None or val == "" or val == {} or val == []
 
 
 def get_transaction_amount_in_rub(transaction: dict[str, Any]) -> float:
