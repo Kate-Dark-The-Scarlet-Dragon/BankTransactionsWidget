@@ -3,27 +3,77 @@ import pytest
 from src import widget
 
 
+#=========================================================
+#=== Тесты - Проверка формата наименования счёта/карты ===
+#=========================================================
+
 @pytest.mark.parametrize(
-    "text, expected",
+    "value",
     [
-        ("Текст", True),
-        ("Текст текст", True),
-        ("Text", False),
-        ("Текст text", False),
-        ("1234567890", False),
-        ("Текст 1234", False)
+        "МИР 3766446452238784",
+        "MasterCard 6783917276771847",
+        "Visa Gold 8326537236216459",
+        "Счет 96527012349577388612"
     ]
 )
-def test_is_cyrillic_with_different_texts(text, expected):
-    assert widget.is_only_cyrillic(text) == expected
+def test_validate_account_card_correct_name(value):
+    """Корректные наименования проходят валидацию."""
+    assert widget.validate_account_card(value) is True
 
 
-def test_is_cyrillic_with_empty_string():
-    with pytest.raises(ValueError) as exception_info:
-        widget.is_only_cyrillic("")
+@pytest.mark.parametrize(
+    "value",
+    [
+        # Неверное количество цифр
+        "МИР 1",                     # 1 цифра
+        "МИР 376644645223878",       # 15 цифр
+        "МИР 37664464522387841",     # 17 цифр
+        "Счет 9652701234957738861",  # 19 цифр
+        "МИР 123456789012345678901", # 21 цифра
 
-    assert str(exception_info.value) == "Невозможно выполнить проверку для пустой строки"
+        # Нечисловые символы в номере
+        "МИР 12345678901234ab",    # Буквы в номере
+        "МИР 1234 5678 9012 3456", # Пробелы внутри номера
+        "МИР 1234-5678-9012-3456", # Дефисы в номере
 
+        # Проблемы с пробелом между названием и номером
+        "МИР3766446452238784",
+        "МИР  3766446452238784", # Двойной пробел перед номером
+        " 3766446452238784",
+        "МИР 1234567890123456 ", # Пробел в конце
+
+        # Проблемы с регистром названия
+        "мир 3766446452238784",        # Название со строчной буквы
+        "masterCard 3766446452238784", # Первая буква строчная
+
+        # Проблемы со вторым словом
+        "Visa gold 8326537236216459",  # Второе слово со строчной
+        "Visa  Gold 8326537236216459", # Двойной пробел между словами
+
+        # Три слова в названии
+        "Visa Gold Plus 1234567890123456", # Три слова в названии
+
+        # Пустые и граничные значения
+        "",
+        " ",
+        "МИР",
+        "1234567890123456",
+
+        # Лишние символы
+        "МИР 1234567890123456!",
+        "#МИР 1234567890123456",
+        "МИР@ 1234567890123456",
+        "МИР 1234567890123456\n"
+    ]
+)
+def test_validate_account_card_incorrect_name(value):
+    """Некорректные наименования не проходят валидацию."""
+    assert widget.validate_account_card(value) is False
+
+
+#===============================================================
+#=== Тесты - Формирование маски для наименований карты/счёта ===
+#===============================================================
 
 @pytest.mark.parametrize(
     "account_card, expected",
@@ -34,16 +84,22 @@ def test_is_cyrillic_with_empty_string():
         ("Visa Classic 6831982476737658", "Visa Classic 6831 98** **** 7658")
     ]
 )
-def test_mask_account_card_with_correct_number(account_card, expected):
+def test_mask_account_card_correct_number(account_card, expected):
+    """Обработка корректных номеров."""
     assert widget.mask_account_card(account_card) == expected
 
 
-def test_mask_account_card_with_empty_string():
+def test_mask_account_card_empty_string():
+    """Ошибка при обработке пустого номера."""
     with pytest.raises(ValueError) as exception_info:
         widget.mask_account_card("")
 
     assert str(exception_info.value) == "Невозможно выполнить операцию для пустого номера карты/счёта"
 
+
+#=========================================================
+#=== Тесты - Получение даты из строки формата ISO 8601 ===
+#=========================================================
 
 @pytest.mark.parametrize(
     "iso_date_time, expected",
@@ -52,11 +108,13 @@ def test_mask_account_card_with_empty_string():
         ("1992-11-25T15:08:46.230871", "25.11.1992")
     ]
 )
-def test_get_date(iso_date_time, expected):
+def test_get_date_correct_string(iso_date_time, expected):
+    """Обработка корректной строки даты формата ISO 8601."""
     assert widget.get_date(iso_date_time) == expected
 
 
-def test_get_date_with_empty_string():
+def test_get_date_empty_string():
+    """Ошибка при обработке пустой строки даты."""
     with pytest.raises(ValueError) as exception_info:
         widget.get_date("")
 

@@ -17,6 +17,10 @@
 ### Реализация
 
 Реализованы следующие модули:
+- Основной модуль `main`:
+  - [parametrized_question](docs/api/main.md#parametrized_question) - Задать вопрос пользователю с указанными параметрами;
+  - [load_operations](docs/api/main.md#load_operations) - Загрузка операций из указанного файла;
+  - [print_operations_to_console](docs/api/main.md#print_operations_to_console) - Вывод банковских операций в консоль;
 - Модуль `decorators`:
   - [write_log_text](docs/api/decorators.md#write_log_text) - Логирование информации в консоль/файл;
   - [log](docs/api/decorators.md#log) - Декоратор для логирования вызовов функции;
@@ -38,14 +42,18 @@
   - [get_mask_card_number](docs/api/masks.md#get_mask_card_number) - Функция, которая форматирует номер карты и выводит маску;
   - [get_mask_account](docs/api/masks.md#get_mask_account) - Функция, которая форматирует номер лицевого счёта и выводит маску;
 - Модуль `processing`:
-  - [filter_by_state](docs/api/processing.md#filter_by_state) - Получение списка операций с указанным типом операции;
-  - [sort_by_date](docs/api/processing.md#sort_by_date) - Сортировка операций по дате; 
+  - [filter_by_state](docs/api/processing.md#filter_by_state) -  Фильтрация операций по их типу;
+  - [sort_by_date](docs/api/processing.md#sort_by_date) - Сортировка операций по дате;
+  - [filter_by_description](docs/api/processing.md#filter_by_description) - Фильтрация операций по описанию;
+  - [count_operations_by_category](docs/api/processing.md#count_operations_by_category) - Подсчёт количества операций по каждой категории;
 - Модуль `utils`:
   - [load_transactions_from_file](docs/api/utils.md#load_transactions_from_file) - Загрузка списка транзакций (операций) из JSON-файла;
+  - [remove_empty_operations](docs/api/utils.md#remove_empty_operations) - Удалить пустые элементы из загруженного JSON-файла;
+  - [is_empty_value](docs/api/utils.md#is_empty_value) - Проверка на пустой элемент в данных JSON;
   - [get_transaction_amount_in_rub](docs/api/utils.md#get_transaction_amount_in_rub) - Получить сумму транзакции в рублях;
 - Модуль `widget`:
-  - [is_only_cyrillic](docs/api/widget.md#is_only_cyrillic) - Проверка, что текст состоит только из кириллических букв;
-  - [mask_account_card](docs/api/widget.md#mask_account_card) - Функция, которая форматирует номер в наименовании карты/счёта и выводит маску;
+  - [validate_account_card](docs/api/widget.md#validate_account_card) - Проверка формата наименования счёта/карты;
+  - [mask_account_card](docs/api/widget.md#mask_account_card) - роверка формата наименования счёта/карты;
   - [get_date](docs/api/widget.md#get_date) - Получение даты из строки формата ISO 8601.
 
 > 📘 **Полная документация** с примерами и описанием параметров доступна в папке [`docs/api`](docs/api).
@@ -83,10 +91,10 @@ src\generators.py        19          100%
 src\loader_csv_excel.py  49          100%
 src\logger_setup.py      27           81%
 src\masks.py             30          100%
-src\processing.py        10          100%
-src\utils.py             38          100%
-src\widget.py            21          100%
-TOTAL                   249           98%
+src\processing.py        23          100%
+src\utils.py             44          100%
+src\widget.py            25           92%
+TOTAL                   272           96%
 ```
 
 > 📊 **HTML отчёт покрытия**: [`htmlcov/index.html`](htmlcov/src/index.html)
