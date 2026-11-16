@@ -1,8 +1,6 @@
 import re
-
 from collections import Counter
 from typing import Any
-
 
 ALLOWED_STATES = ["EXECUTED", "CANCELED", "PENDING"]
 
@@ -67,8 +65,7 @@ def count_operations_by_category(operation_list: list[dict], categories: list[st
     descriptions = [
         operation.get("description")
         for operation in operation_list
-        if operation.get("description") is not None
-           and operation.get("description") in categories
+        if operation.get("description") is not None and operation.get("description") in categories
     ]
 
     # Подсчёт категорий

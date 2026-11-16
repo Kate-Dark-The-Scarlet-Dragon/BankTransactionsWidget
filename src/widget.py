@@ -3,8 +3,7 @@ from datetime import datetime
 
 from src.masks import get_mask_account, get_mask_card_number
 
-
-ACCOUNT_CARD_PATTERN = r'^(?:[A-ZА-Я](?:[A-ZА-Я]|[a-zа-я])*(?:\s[A-ZА-Я](?:[A-ZА-Я]|[a-zа-я])*)?)\s(?:\d{16}|\d{20})$'
+ACCOUNT_CARD_PATTERN = r"^(?:[A-ZА-Я](?:[A-ZА-Я]|[a-zа-я])*(?:\s[A-ZА-Я](?:[A-ZА-Я]|[a-zа-я])*)?)\s(?:\d{16}|\d{20})$"
 
 
 def validate_account_card(account_card: str) -> bool:
